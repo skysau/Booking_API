@@ -14,8 +14,8 @@ const getAllbookings=(req,res)=>{
 }
 
 const addBooking =(req,res)=>{
-     const  { bookingid,date , bill }=req.body;
-     const customerid=`${req.body.clubid}_${req.body.phone}_${req.body.customerid}`
+     const  { bookingid,date , bill,customerid}=req.body;
+     //const customerid=`${req.body.clubid}_${req.body.phone}_${req.body.customerid}`
      pool.query(bookingQuery.addBookings,[bookingid , date , bill , customerid],(error,result)=>{
         if (error){
             res.json(error);
