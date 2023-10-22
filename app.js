@@ -3,15 +3,25 @@ const customersRoute =require('./src/customers/route');
 const bookingRoute =require('./src/bookings/route');
 const singleTableCustomerRoute=require('./src/customerSingleTable/singleTable.router')
 const app=express();
-const port=3000;
+require('dotenv').config();
+
+
+const port= process.env.PORT || 3000;
+const apiKey = process.env.API_KEY;
 
 
 
 app.use(express.json());
 
-app.get("/",(req,res)=>{
-    res.send({message:"hello world"});
-});
+app.use((req, res, next) => {
+    const { key } = req.headers;
+  
+    if (key === apiKey ) {
+      next(); 
+    } else {
+      res.status(401).json({ message: 'Authentication failed' });
+    }
+  });
 
 app.use("/api/customers",customersRoute);
 app.use("/api/bookings",bookingRoute);
